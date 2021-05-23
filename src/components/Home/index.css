@@ -1,0 +1,8 @@
+.timelineY {
+    border-right: 6px solid #bfbfbf;
+}
+.timelineX {
+    background-color: #bfbfbf;
+    margin: auto 0 !important;
+    width: 100%;
+}

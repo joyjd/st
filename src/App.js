@@ -1,13 +1,13 @@
+import React, { useRef, useContext } from 'react';
 import './App.css';
-import Landing from "./components/LandingPage";
+import Landing from './components/LandingPage';
+import Login from './components/Login';
+import AuthContext from './store/auth-context';
 
 const App = () => {
-  return(
-    <div>
-      test App
-      <Landing/>
-    </div>
-  )
-}
+    const ctx = useContext(AuthContext);
+    //localStorage.clear();
+    return ctx.isLoggedIn ? <Landing /> : <Login onLoginFunc={ctx.onLogin} />;
+};
 
 export default App;
