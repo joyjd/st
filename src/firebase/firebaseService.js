@@ -142,3 +142,20 @@ export const removeParticipant = async (sessionId, participantId) => {
         console.log(err);
     }
 };
+
+export const getSessionReport = async (ownerId) => {
+    const result = await db
+        .collectionGroup('Sessions')
+        .where('ownerId', '==', ownerId)
+        .orderBy('startDate')
+        .get();
+
+    let sessionList = [];
+    if (result !== undefined || result.length !== 0) {
+        result.forEach((doc) => {
+            sessionList.push(doc.data());
+        });
+    }
+
+    return sessionList;
+};

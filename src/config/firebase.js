@@ -12,7 +12,7 @@ const firebaseConfig = {
     measurementId: 'G-P1DYSS49KV',
 };
 
-const env = 'dev'; //dev/ prod
+const env = 'prod'; //dev/ prod
 let firebaseApp;
 let db;
 

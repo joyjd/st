@@ -7,6 +7,9 @@ import DateRangeIcon from '@material-ui/icons/DateRange';
 import AccessAlarmIcon from '@material-ui/icons/AccessAlarm';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import DevicesIcon from '@material-ui/icons/Devices';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export const getIcons = (iconName, props) => {
     const components = {
@@ -18,6 +21,9 @@ export const getIcons = (iconName, props) => {
         AccessAlarmIcon: AccessAlarmIcon,
         Dot: FiberManualRecordIcon,
         RemoveUser: PersonAddDisabledIcon,
+        Details: FindInPageIcon,
+        Session: DevicesIcon,
+        User: AccountCircleIcon,
     };
     const Icon = components[iconName];
     return <Icon {...props} />;
@@ -26,6 +32,13 @@ export const getIcons = (iconName, props) => {
 export const getTitle = (titleName) => {
     return (
         <div className="textBg">
+            <div>{titleName}</div>
+        </div>
+    );
+};
+export const getTitleSm = (titleName) => {
+    return (
+        <div className="textSm">
             <div>{titleName}</div>
         </div>
     );

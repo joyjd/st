@@ -56,8 +56,8 @@ const Menu = [
         icon: 'ComputerIcon',
     },
     {
-        name: 'Quiz',
-        path: '/Quiz',
+        name: 'My Reports',
+        path: '/Report',
         icon: 'AssignmentIcon',
     },
 ];

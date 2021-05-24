@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 
 import Home from './../Home';
 import SessionRoom from './../SessionRoom';
+import Report from './../Report';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -32,6 +33,9 @@ const ContentHolder = () => {
             </Route>
             <Route path="/SessionRoom">
                 <SessionRoom />
+            </Route>
+            <Route path="/Report">
+                <Report />
             </Route>
         </main>
     );

@@ -16,6 +16,7 @@ const ScheduleSession = () => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const sessionNameRef = useRef();
+    const errorRef = useRef();
     const closeModal = useCallback(() => {
         setOpen(false);
     }, []);
@@ -29,20 +30,35 @@ const ScheduleSession = () => {
         setEndDate(date);
     }, []);
     const handleConfirmSession = async () => {
-        console.log(new Date(startDate.toDateString()).getTime());
-        const formData = {
-            user: localStorage.getItem('employeeId'),
-            ownerName: localStorage.getItem('employeeName'),
-            sessionId: '' + new Date().getTime() + '',
-            startDate: new Date(startDate.toDateString()).getTime(),
-            startTime: new Date(startDate).getTime(),
-            endDate: new Date(endDate.toDateString()).getTime(),
-            endTime: new Date(endDate).getTime(),
-            sessionName: sessionNameRef.current.value,
-        };
+        //console.log(new Date(startDate.toDateString()).getTime());
+        if (sessionNameRef.current.value.trim() === '') {
+            errorRef.current.innerHTML = 'Session name cannot be blank !';
+        } else if (
+            new Date(startDate.toDateString()).getTime() >
+            new Date(endDate.toDateString()).getTime()
+        ) {
+            errorRef.current.innerHTML =
+                'Start date cannot be after end date !';
+        } else if (
+            new Date(startDate.toDateString()).getTime() < new Date().getTime()
+        ) {
+            errorRef.current.innerHTML = 'Start date cannot be a past date !';
+        } else {
+            errorRef.current.innerHTML = '';
+            const formData = {
+                user: localStorage.getItem('employeeId'),
+                ownerName: localStorage.getItem('employeeName'),
+                sessionId: '' + new Date().getTime() + '',
+                startDate: new Date(startDate.toDateString()).getTime(),
+                startTime: new Date(startDate).getTime(),
+                endDate: new Date(endDate.toDateString()).getTime(),
+                endTime: new Date(endDate).getTime(),
+                sessionName: sessionNameRef.current.value,
+            };
 
-        await addSession({ ...formData });
-        closeModal();
+            await addSession({ ...formData });
+            closeModal();
+        }
     };
 
     return (
@@ -97,6 +113,7 @@ const ScheduleSession = () => {
                                 />
                             </MuiPickersUtilsProvider>
                         </Box>
+                        <div ref={errorRef} style={{ color: 'red' }}></div>
                     </form>
                 </>
             </Modal>
