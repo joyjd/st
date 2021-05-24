@@ -3,11 +3,11 @@ import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-
+import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { getIcons } from './../../helpers';
-
+import Box from '@material-ui/core/Box';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,14 @@ const useStyles = makeStyles((theme) => ({
 const Header = ({ handleNavigation, openNav }) => {
     const classes = useStyles();
     const theme = useTheme();
-    console.log('Header rendered');
+    const getNameInitials = () => {
+        const name = localStorage.getItem('employeeName');
+        const tmpArr = name.split(' ');
+        return (
+            tmpArr[0].split('')[0].toUpperCase() +
+            tmpArr[tmpArr.length - 1].split('')[0].toUpperCase()
+        );
+    };
     return (
         <AppBar
             position="fixed"
@@ -53,22 +60,26 @@ const Header = ({ handleNavigation, openNav }) => {
                 [classes.appBarShift]: openNav,
             })}
         >
-            <Toolbar>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    onClick={() => handleNavigation(true)}
-                    edge="start"
-                    className={clsx(classes.menuButton, {
-                        [classes.hide]: openNav,
-                    })}
-                >
-                    {getIcons('MenuIcon')}
-                </IconButton>
-                <Typography variant="h6" noWrap>
-                    GuidePRO, {localStorage.getItem('employeeName')}
-                </Typography>
-            </Toolbar>
+            <Box display="flex" flexDirection="row">
+                <Toolbar>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={() => handleNavigation(true)}
+                        edge="start"
+                        className={clsx(classes.menuButton, {
+                            [classes.hide]: openNav,
+                        })}
+                    >
+                        {getIcons('MenuIcon')}
+                    </IconButton>
+
+                    <Typography variant="h6" noWrap>
+                        GuidePRO
+                    </Typography>
+                </Toolbar>
+                <Avatar aria-label="recipe">{getNameInitials()}</Avatar>
+            </Box>
         </AppBar>
     );
 };

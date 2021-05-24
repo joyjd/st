@@ -40,7 +40,8 @@ const ScheduleSession = () => {
             errorRef.current.innerHTML =
                 'Start date cannot be after end date !';
         } else if (
-            new Date(startDate.toDateString()).getTime() < new Date().getTime()
+            new Date(startDate.toDateString()).getTime() <
+            new Date(new Date().toDateString()).getTime()
         ) {
             errorRef.current.innerHTML = 'Start date cannot be a past date !';
         } else {
