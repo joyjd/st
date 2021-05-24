@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Route } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Home from './../Home';
 import SessionRoom from './../SessionRoom';
 import Report from './../Report';
+import AuthContext from './../../store/auth-context';
 
 const useStyles = makeStyles((theme) => ({
     toolbar: {
@@ -22,20 +23,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ContentHolder = () => {
+const ContentHolder = ({ onLogoutFunc }) => {
     const classes = useStyles();
     const theme = useTheme();
+    const ctx = useContext(AuthContext);
+
     return (
         <main className={classes.content}>
             <div className={classes.toolbar} />
-            <Route path="/Home">
+
+            <Route path="/Home" exact>
                 <Home />
             </Route>
-            <Route path="/SessionRoom">
+            <Route path="/SessionRoom" exact>
                 <SessionRoom />
             </Route>
-            <Route path="/Report">
+            <Route path="/Report" exact>
                 <Report />
+            </Route>
+            <Route path="/" exact>
+                <Home />
             </Route>
         </main>
     );

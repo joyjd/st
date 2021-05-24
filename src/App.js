@@ -7,7 +7,11 @@ import AuthContext from './store/auth-context';
 const App = () => {
     const ctx = useContext(AuthContext);
     //localStorage.clear();
-    return ctx.isLoggedIn ? <Landing /> : <Login onLoginFunc={ctx.onLogin} />;
+    return ctx.isLoggedIn ? (
+        <Landing onLogoutFunc={ctx.onLogOut} />
+    ) : (
+        <Login onLoginFunc={ctx.onLogin} />
+    );
 };
 
 export default App;

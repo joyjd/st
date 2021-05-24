@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -66,6 +66,14 @@ const Navigator = ({ handleNavigation, openNav }) => {
     const classes = useStyles();
     const theme = useTheme();
 
+    const onLogOut = () => {
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('employeeName');
+        localStorage.removeItem('employeeId');
+        // eslint-disable-next-line no-restricted-globals
+        location.reload();
+    };
+
     console.log('Navigator rendered');
     return (
         <Drawer
@@ -104,6 +112,11 @@ const Navigator = ({ handleNavigation, openNav }) => {
                         </ListItem>
                     </NavLink>
                 ))}
+
+                <ListItem button onClick={() => onLogOut()}>
+                    <ListItemIcon>{getIcons('Logout')}</ListItemIcon>
+                    <ListItemText primary={'Logout'} />
+                </ListItem>
             </List>
         </Drawer>
     );

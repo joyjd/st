@@ -10,6 +10,7 @@ import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import DevicesIcon from '@material-ui/icons/Devices';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 export const getIcons = (iconName, props) => {
     const components = {
@@ -24,6 +25,7 @@ export const getIcons = (iconName, props) => {
         Details: FindInPageIcon,
         Session: DevicesIcon,
         User: AccountCircleIcon,
+        Logout: ExitToAppIcon,
     };
     const Icon = components[iconName];
     return <Icon {...props} />;

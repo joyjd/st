@@ -47,11 +47,11 @@ const Header = ({ handleNavigation, openNav }) => {
     const theme = useTheme();
     const getNameInitials = () => {
         const name = localStorage.getItem('employeeName');
-        const tmpArr = name.split(' ');
-        return (
-            tmpArr[0].split('')[0].toUpperCase() +
-            tmpArr[tmpArr.length - 1].split('')[0].toUpperCase()
-        );
+        const tmpArr = name.trim().split(' ');
+        return tmpArr.length !== 1
+            ? tmpArr[0].split('')[0].toUpperCase() +
+                  tmpArr[tmpArr.length - 1].split('')[0].toUpperCase()
+            : tmpArr[0].split('')[0].toUpperCase();
     };
     return (
         <AppBar
@@ -60,7 +60,13 @@ const Header = ({ handleNavigation, openNav }) => {
                 [classes.appBarShift]: openNav,
             })}
         >
-            <Box display="flex" flexDirection="row">
+            <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                pr={2}
+            >
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -78,7 +84,12 @@ const Header = ({ handleNavigation, openNav }) => {
                         GuidePRO
                     </Typography>
                 </Toolbar>
-                <Avatar aria-label="recipe">{getNameInitials()}</Avatar>
+                <Avatar
+                    style={{ backgroundColor: '#081456' }}
+                    aria-label="recipe"
+                >
+                    {getNameInitials()}
+                </Avatar>
             </Box>
         </AppBar>
     );

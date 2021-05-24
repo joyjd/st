@@ -11,6 +11,9 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('employeeId', employeeId);
         setIsLoggedIn(true);
     };
+    const logoutHandler = () => {
+        setIsLoggedIn(false);
+    };
 
     useEffect(() => {
         const storedLogInfo = localStorage.getItem('isLoggedIn');
@@ -23,6 +26,7 @@ export const AuthContextProvider = ({ children }) => {
             value={{
                 isLoggedIn: isLoggedIn,
                 onLogin: loginHandler,
+                onLogOut: logoutHandler,
             }}
         >
             {children}
