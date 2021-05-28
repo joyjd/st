@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom';
 import Home from './../Home';
 import SessionRoom from './../SessionRoom';
 import Report from './../Report';
+import Quiz from './../Quiz';
 import AuthContext from './../../store/auth-context';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +41,9 @@ const ContentHolder = ({ onLogoutFunc }) => {
             </Route>
             <Route path="/Report" exact>
                 <Report />
+            </Route>
+            <Route path="/Quiz" exact>
+                <Quiz />
             </Route>
             <Route path="/" exact>
                 <Home />

@@ -12,9 +12,10 @@ import { getTitleSm, getTitle, getIcons, getTime } from './../../../helpers';
 import { Typography } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import ContenderReport from './../ContenderReport';
 
 const DetailReport = ({ session, handleClose, open, pList }) => {
-    const { sessionName, startTime, endTime, startDate } = session;
+    const { sessionName, startTime, endTime, startDate, sessionId } = session;
 
     return (
         <Dialog fullScreen open={open} onClose={handleClose}>
@@ -50,12 +51,14 @@ const DetailReport = ({ session, handleClose, open, pList }) => {
                             )}
                         </Typography>
                     </Box>
-                    {getTitle('Participants (' + pList.length + ')')}
+                    {getTitle('Associated Quiz')}
+                    <ContenderReport sessionId={sessionId} />
+                    {getTitleSm('Participants (' + pList.length + ')')}
                     {pList.length !== 0 ? (
                         <>
                             {pList.map((el, index) => {
                                 return (
-                                    <List key={index}>
+                                    <List key={index} style={{ paddingTop: 0 }}>
                                         <ListItem
                                             style={{
                                                 paddingLeft: 0,

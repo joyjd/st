@@ -11,6 +11,12 @@ import FindInPageIcon from '@material-ui/icons/FindInPage';
 import DevicesIcon from '@material-ui/icons/Devices';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExtensionIcon from '@material-ui/icons/Extension';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import FilterNoneIcon from '@material-ui/icons/FilterNone';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import LiveTvIcon from '@material-ui/icons/LiveTv';
 
 export const getIcons = (iconName, props) => {
     const components = {
@@ -26,6 +32,11 @@ export const getIcons = (iconName, props) => {
         Session: DevicesIcon,
         User: AccountCircleIcon,
         Logout: ExitToAppIcon,
+        Quiz: ExtensionIcon,
+        Question: ContactSupportIcon,
+        AnswerOption: CheckBoxOutlineBlankIcon,
+        RightAnswer: CheckBoxIcon,
+        Host: LiveTvIcon,
     };
     const Icon = components[iconName];
     return <Icon {...props} />;

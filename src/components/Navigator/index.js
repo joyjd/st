@@ -60,6 +60,11 @@ const Menu = [
         path: '/Report',
         icon: 'AssignmentIcon',
     },
+    {
+        name: 'My Quizes',
+        path: '/Quiz',
+        icon: 'Quiz',
+    },
 ];
 
 const Navigator = ({ handleNavigation, openNav }) => {

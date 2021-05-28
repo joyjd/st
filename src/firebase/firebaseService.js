@@ -1,5 +1,6 @@
+import { set } from 'date-fns';
 import { db } from './../config/firebase';
-
+import firebase from 'firebase/app';
 /*
 return true or false
 */
@@ -54,6 +55,8 @@ export const addSession = async ({
                 endTime: endTime,
                 ownerName: ownerName,
                 ownerId: user,
+                quizes: [],
+                quizNames: [],
                 status: 'off', //off,active,expired,closed
             });
         return true;
@@ -120,6 +123,50 @@ export const markPresent = async (sessionId, user, empName) => {
     }
 };
 
+export const addQuiz = async ({
+    quizID,
+    quizName,
+    quizOwnerId,
+    quizOwnerName,
+    quizDuration,
+    qtnData,
+}) => {
+    try {
+        const tempData = {};
+
+        qtnData.forEach(
+            (qtn) =>
+                (tempData[qtn.qtnId] = {
+                    qtnId: qtn.qtnId,
+                    data: qtn.data,
+                    options: qtn.options,
+                    answerIndex: qtn.answerIndex,
+                })
+        );
+
+        const docData = {
+            quizID: quizID,
+            quizName: quizName,
+            quizOwnerId: quizOwnerId,
+            quizOwnerName: quizOwnerName,
+            quizDuration: quizDuration,
+            questionList: tempData,
+        };
+
+        await db.collection('QuizBank').doc(quizID).set(docData);
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const getQuizes = async (quizOwnerId) => {
+    const docRef = await db
+        .collection('QuizBank')
+        .where('quizOwnerId', '==', quizOwnerId);
+
+    return docRef;
+};
+
 export const getSessionDetails = async (ownerId, sessionId) => {
     const docRef = await db
         .collection('Users')
@@ -158,4 +205,103 @@ export const getSessionReport = async (ownerId) => {
     }
 
     return sessionList;
+};
+
+export const updateQuizList = async (user, sessionId, quizId, quizName) => {
+    try {
+        await db
+            .collection('Users')
+            .doc(user)
+            .collection('Sessions')
+            .doc(sessionId)
+            .update({
+                quizes: firebase.firestore.FieldValue.arrayUnion(
+                    '' + quizId + ''
+                ),
+                quizNames: firebase.firestore.FieldValue.arrayUnion(
+                    '' + quizName + ''
+                ),
+            });
+    } catch (er) {
+        console.log(er);
+    }
+};
+
+export const getSingleQuizDetails = async (quizID) => {
+    try {
+        return await db.collection('QuizBank').doc(quizID).get();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const addQuizScore = async (
+    userId,
+    userName,
+    score,
+    total,
+    quizID,
+    qzName,
+    sessionId
+) => {
+    try {
+        await db
+            .collection('QuizBank')
+            .doc(quizID)
+            .collection('Contenders')
+            .doc(userId)
+            .set({
+                score: score,
+                total: total,
+                userId: userId,
+                userName: userName,
+                qzName: qzName,
+                quizID: quizID,
+                sessionId: sessionId,
+            });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getScoreLive = (quizID, sessionId) => {
+    return db
+        .collection('QuizBank')
+        .doc(quizID)
+        .collection('Contenders')
+        .where('sessionId', '==', sessionId);
+};
+
+export const getIndividualQuizScore = async (userId) => {
+    return await db
+        .collectionGroup('Contenders')
+        .where('userId', '==', userId)
+        .get();
+};
+
+export const getQuizDetail = async (quizId) => {
+    try {
+        return await db
+            .collection('QuizBank')
+            .where('quizID', '==', quizId)
+            .get();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getContendersBySession = async (sessionId) => {
+    const result = await db
+        .collectionGroup('Contenders')
+        .where('sessionId', '==', sessionId)
+        .get();
+
+    let contenderList = [];
+    if (result !== undefined || result.length !== 0) {
+        result.forEach((doc) => {
+            contenderList.push(doc.data());
+        });
+    }
+
+    return contenderList;
 };

@@ -9,6 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ParticipantList from './ParticipantList';
 import Snackbar from '@material-ui/core/Snackbar';
 import HaltAttendance from './HaltAttendance';
+import QuizRoom from './QuizRoom';
 
 import {
     getSessionDetails,
@@ -184,7 +185,7 @@ const SessionRoom = () => {
                 ></Box>
             </Card>
             {getTitle('Session Quiz')}
-            <>No quizes allocated till now.</>
+            <QuizRoom />
 
             {localStorage.getItem('sessionOwnerId') ===
             localStorage.getItem('employeeId') ? (
